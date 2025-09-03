@@ -7,6 +7,7 @@ RUN chmod +x /railway-entrypoint.sh
 ENV PORT=3000 \
     VROOM_ROUTER=osrm \
     VROOM_LOG=/conf \
+    FORCE_CONFIG_REWRITE=1 \
     # Default internal hosts for Railway services
     VALHALLA_HOST=valhalla \
     VALHALLA_PORT=8080 \
