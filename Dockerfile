@@ -9,7 +9,7 @@ ENV PORT=3000 \
     VROOM_LOG=/conf \
     # Default internal hosts for Railway services
     VALHALLA_HOST=valhalla \
-    VALHALLA_PORT=8002 \
+    VALHALLA_PORT=8080 \
     OSRM_HOST=osrm \
     OSRM_PORT=5000 \
     ORS_HOST=ors \
