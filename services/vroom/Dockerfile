@@ -12,6 +12,11 @@ ENV PORT=3000 \
     OSRM_PORT="" \
     OSRM_PROFILE=car
 
+ENV VROOM_ROUTER=valhalla \
+    VROOM_LOG=/conf \
+    VALHALLA_HOST=valhalla \
+    VALHALLA_PORT=8080
+
 EXPOSE 3000
 CMD ["/railway-entrypoint.sh"]
 
