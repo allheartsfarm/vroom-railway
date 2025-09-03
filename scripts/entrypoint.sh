@@ -20,21 +20,86 @@ mkdir -p /conf
 # Only (re)write config if none present, so you can tweak in container
 if [[ ! -f /conf/config.yml ]]; then
   cat > /conf/config.yml <<YAML
-router: ${VROOM_ROUTER}
-port: ${PORT}
+cliArgs:
+  geometry: false
+  planmode: false
+  threads: 4
+  explore: 5
+  limit: '1mb'
+  logdir: '/..'
+  logsize: '100M'
+  maxlocations: 1000
+  maxvehicles: 200
+  override: true
+  path: ''
+  port: ${PORT}
+  router: '${VROOM_ROUTER}'
+  timeout: 300000
+  baseurl: '/'
 routingServers:
   osrm:
-    car:   { host: "${OSRM_HOST}", port: ${OSRM_PORT} }
-    bike:  { host: "${OSRM_HOST}", port: ${OSRM_PORT} }
-    foot:  { host: "${OSRM_HOST}", port: ${OSRM_PORT} }
-  valhalla:
-    car:   { host: "${VALHALLA_HOST}", port: ${VALHALLA_PORT} }
-    bike:  { host: "${VALHALLA_HOST}", port: ${VALHALLA_PORT} }
-    foot:  { host: "${VALHALLA_HOST}", port: ${VALHALLA_PORT} }
+    car:
+      host: '${OSRM_HOST}'
+      port: '${OSRM_PORT}'
+    bike:
+      host: '${OSRM_HOST}'
+      port: '${OSRM_PORT}'
+    foot:
+      host: '${OSRM_HOST}'
+      port: '${OSRM_PORT}'
   ors:
-    car:   { host: "${ORS_HOST}", port: ${ORS_PORT} }
-    bike:  { host: "${ORS_HOST}", port: ${ORS_PORT} }
-    foot:  { host: "${ORS_HOST}", port: ${ORS_PORT} }
+    driving-car:
+      host: '${ORS_HOST}/ors/v2'
+      port: '${ORS_PORT}'
+    driving-hgv:
+      host: '${ORS_HOST}/ors/v2'
+      port: '${ORS_PORT}'
+    cycling-regular:
+      host: '${ORS_HOST}/ors/v2'
+      port: '${ORS_PORT}'
+    cycling-mountain:
+      host: '${ORS_HOST}/ors/v2'
+      port: '${ORS_PORT}'
+    cycling-road:
+      host: '${ORS_HOST}/ors/v2'
+      port: '${ORS_PORT}'
+    cycling-electric:
+      host: '${ORS_HOST}/ors/v2'
+      port: '${ORS_PORT}'
+    foot-walking:
+      host: '${ORS_HOST}/ors/v2'
+      port: '${ORS_PORT}'
+    foot-hiking:
+      host: '${ORS_HOST}/ors/v2'
+      port: '${ORS_PORT}'
+  valhalla:
+    auto:
+      host: '${VALHALLA_HOST}'
+      port: '${VALHALLA_PORT}'
+    bicycle:
+      host: '${VALHALLA_HOST}'
+      port: '${VALHALLA_PORT}'
+    pedestrian:
+      host: '${VALHALLA_HOST}'
+      port: '${VALHALLA_PORT}'
+    motorcycle:
+      host: '${VALHALLA_HOST}'
+      port: '${VALHALLA_PORT}'
+    motor_scooter:
+      host: '${VALHALLA_HOST}'
+      port: '${VALHALLA_PORT}'
+    taxi:
+      host: '${VALHALLA_HOST}'
+      port: '${VALHALLA_PORT}'
+    hov:
+      host: '${VALHALLA_HOST}'
+      port: '${VALHALLA_PORT}'
+    truck:
+      host: '${VALHALLA_HOST}'
+      port: '${VALHALLA_PORT}'
+    bus:
+      host: '${VALHALLA_HOST}'
+      port: '${VALHALLA_PORT}'
 YAML
 fi
 
