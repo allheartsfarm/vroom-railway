@@ -17,6 +17,11 @@ ORS_PORT=${ORS_PORT:-8080}
 
 mkdir -p /conf
 
+# Optional: force config regeneration on each boot when set
+if [[ "${FORCE_CONFIG_REWRITE:-}" == "1" ]]; then
+  rm -f /conf/config.yml || true
+fi
+
 # Only (re)write config if none present, so you can tweak in container
 if [[ ! -f /conf/config.yml ]]; then
   cat > /conf/config.yml <<YAML
