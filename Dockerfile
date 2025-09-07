@@ -1,28 +1,12 @@
-FROM node:18-slim
+FROM ghcr.io/vroom-project/vroom-docker:v1.14.0
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# Custom entrypoint writes /conf/config.yml from env, then calls upstream entrypoint
+COPY scripts/entrypoint.sh /railway-entrypoint.sh
+RUN chmod +x /railway-entrypoint.sh
 
-# Set working directory
-WORKDIR /app
-
-# Copy package files
-COPY package.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy source code
-COPY src/ ./src/
-
-# Create config directory
-RUN mkdir -p /conf
-
-# Set environment variables
 ENV VROOM_ROUTER=valhalla \
     VROOM_LOG=/conf \
+    FORCE_CONFIG_REWRITE=1 \
     # Use Valhalla public URL to avoid internal networking issues
     VALHALLA_HOST=https://allheartsfarm-valhalla.up.railway.app \
     VALHALLA_PORT=443 \
@@ -30,6 +14,6 @@ ENV VROOM_ROUTER=valhalla \
 
 EXPOSE 8080
 
-# Start the custom vroom server
-CMD ["npm", "start"]
+# Use the original entrypoint
+CMD ["/railway-entrypoint.sh"]
 

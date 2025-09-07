@@ -114,5 +114,9 @@ touch /conf/access.log
 # Ensure vroom-express uses Railway's PORT
 export PORT=${PORT:-8080}
 
+# The original vroom-express is hardcoded to port 8080, so we need to ensure
+# Railway's edge proxy can reach it. Since we set PORT=8080 in Railway env vars,
+# this should work.
+
 # Hand off to upstream entrypoint via bash (ensure no exec bit needed)
 exec /bin/bash /docker-entrypoint.sh
