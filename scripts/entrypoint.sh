@@ -114,5 +114,13 @@ touch /conf/access.log
 # Ensure vroom-express uses Railway's PORT
 export PORT=${PORT:-3000}
 
-# Hand off to upstream entrypoint via bash (ensure no exec bit needed)
-exec /bin/bash /docker-entrypoint.sh
+# Override the hardcoded port in vroom-express by modifying the startup
+# The vroom-express container is hardcoded to port 8080, so we need to override it
+if [ -n "${PORT}" ] && [ "${PORT}" != "8080" ]; then
+  # Start vroom-express on the correct port
+  echo "Starting vroom-express on port ${PORT} (Railway PORT)"
+  exec node /usr/local/lib/node_modules/vroom-express/src/index.js --port ${PORT} --host 0.0.0.0
+else
+  # Hand off to upstream entrypoint via bash (ensure no exec bit needed)
+  exec /bin/bash /docker-entrypoint.sh
+fi
