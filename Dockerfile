@@ -18,5 +18,5 @@ ENV VROOM_ROUTER=osrm \
 EXPOSE 3000
 
 # Override the default CMD to ensure proper port binding
-CMD ["sh", "-c", "PORT=${PORT:-3000} node /usr/local/lib/node_modules/vroom-express/src/index.js --port ${PORT:-3000} --host 0.0.0.0"]
+CMD ["/railway-entrypoint.sh"]
 
