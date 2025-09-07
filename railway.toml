@@ -1,6 +1,11 @@
 [build]
 builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
 
 [deploy]
 numReplicas = 1
 restartPolicyType = "ON_FAILURE"
+
+[variables]
+# Force Railway to use our Dockerfile
+RAILWAY_DOCKERFILE_PATH = "Dockerfile"

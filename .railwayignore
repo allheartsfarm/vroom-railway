@@ -1,0 +1,7 @@
+# Force Railway to use Dockerfile only
+package.json
+package-lock.json
+node_modules/
+src/
+.git/
+.env*
