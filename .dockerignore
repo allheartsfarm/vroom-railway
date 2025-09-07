@@ -1,0 +1,8 @@
+# Docker ignore file to ensure clean Docker build
+.git/
+.env*
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store

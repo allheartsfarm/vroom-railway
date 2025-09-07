@@ -1,6 +1,7 @@
 FROM ghcr.io/vroom-project/vroom-docker:v1.14.0
 
-# Cache bust - force rebuild v2
+# FORCE DOCKER BUILD - Railway should use this Dockerfile
+# Cache bust - force rebuild v3
 # Custom entrypoint writes /conf/config.yml from env, then calls upstream entrypoint
 COPY scripts/entrypoint.sh /railway-entrypoint.sh
 RUN chmod +x /railway-entrypoint.sh
