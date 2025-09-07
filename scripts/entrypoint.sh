@@ -114,6 +114,15 @@ touch /conf/access.log
 # Ensure vroom-express uses Railway's PORT
 export PORT=${PORT:-8080}
 
+# Debug: Show what we're using for Valhalla
+echo "=== VROOM CONFIG DEBUG ==="
+echo "VROOM_ROUTER: $VROOM_ROUTER"
+echo "VALHALLA_HOST: $VALHALLA_HOST"
+echo "VALHALLA_PORT: $VALHALLA_PORT"
+echo "VALHALLA_USE_HTTPS: $VALHALLA_USE_HTTPS"
+echo "PORT: $PORT"
+echo "=========================="
+
 # The original vroom-express is hardcoded to port 8080, so we need to ensure
 # Railway's edge proxy can reach it. Since we set PORT=8080 in Railway env vars,
 # this should work.

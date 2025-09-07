@@ -14,6 +14,6 @@ ENV VROOM_ROUTER=valhalla \
 
 EXPOSE 8080
 
-# Use the original entrypoint
+# Use our custom entrypoint to generate config.yml
 CMD ["/railway-entrypoint.sh"]
 
