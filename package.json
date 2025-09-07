@@ -1,0 +1,16 @@
+{
+  "name": "vroom-railway",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Custom vroom-express wrapper for Railway deployment",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "vroom-express": "^0.12.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
