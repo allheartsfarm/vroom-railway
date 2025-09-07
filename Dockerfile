@@ -4,13 +4,12 @@ FROM ghcr.io/vroom-project/vroom-docker:v1.14.0
 COPY scripts/entrypoint.sh /railway-entrypoint.sh
 RUN chmod +x /railway-entrypoint.sh
 
-ENV PORT=3000 \
-    VROOM_ROUTER=osrm \
+ENV VROOM_ROUTER=valhalla \
     VROOM_LOG=/conf \
     FORCE_CONFIG_REWRITE=1 \
-    # Default internal hosts for Railway services
-    VALHALLA_HOST=valhalla \
-    VALHALLA_PORT=8080 \
+    # Use Valhalla public URL to avoid internal networking issues
+    VALHALLA_HOST=https://allheartsfarm-valhalla.up.railway.app \
+    VALHALLA_PORT= \
     OSRM_HOST=osrm \
     OSRM_PORT=5000 \
     ORS_HOST=ors \

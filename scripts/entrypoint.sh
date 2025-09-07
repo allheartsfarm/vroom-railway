@@ -111,5 +111,8 @@ fi
 # Ensure access.log exists for vroom-express
 touch /conf/access.log
 
+# Ensure vroom-express uses Railway's PORT
+export PORT=${PORT:-3000}
+
 # Hand off to upstream entrypoint via bash (ensure no exec bit needed)
 exec /bin/bash /docker-entrypoint.sh
