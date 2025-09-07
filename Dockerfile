@@ -16,5 +16,7 @@ ENV VROOM_ROUTER=osrm \
     ORS_PORT=8080
 
 EXPOSE 3000
-CMD ["/railway-entrypoint.sh"]
+
+# Override the default CMD to ensure proper port binding
+CMD ["sh", "-c", "PORT=${PORT:-3000} /railway-entrypoint.sh"]
 
