@@ -114,14 +114,24 @@ touch /conf/access.log
 # Ensure vroom-express uses Railway's PORT
 export PORT=${PORT:-3000}
 
-# Try to override the port by modifying the vroom-express source code directly
-if [ -f /usr/local/lib/node_modules/vroom-express/src/index.js ]; then
-  # Backup original index.js
-  cp /usr/local/lib/node_modules/vroom-express/src/index.js /usr/local/lib/node_modules/vroom-express/src/index.js.bak
-  
-  # Modify the port in the source code
-  sed -i "s/8080/${PORT}/g" /usr/local/lib/node_modules/vroom-express/src/index.js
-fi
+# Try to override the port by using a different approach - modify the process environment
+# and use a custom startup script
+cat > /tmp/start-vroom-custom.sh << EOF
+#!/bin/bash
+# Custom startup script for vroom-express with Railway PORT support
 
-# Hand off to upstream entrypoint via bash (ensure no exec bit needed)
-exec /bin/bash /docker-entrypoint.sh
+# Set the port from Railway
+PORT=\${PORT:-3000}
+HOST=\${HOST:-0.0.0.0}
+
+echo "Starting vroom-express on \${HOST}:\${PORT}"
+
+# Start vroom-express with the correct port using the original entrypoint but with port override
+cd /usr/local/lib/node_modules/vroom-express
+exec node src/index.js --port \${PORT} --host \${HOST}
+EOF
+
+chmod +x /tmp/start-vroom-custom.sh
+
+# Use our custom startup script
+exec /tmp/start-vroom-custom.sh
