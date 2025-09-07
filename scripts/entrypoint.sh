@@ -114,13 +114,13 @@ touch /conf/access.log
 # Ensure vroom-express uses Railway's PORT
 export PORT=${PORT:-3000}
 
-# Try to modify the vroom-express startup by overriding the package.json start script
-if [ -f /usr/local/lib/node_modules/vroom-express/package.json ]; then
-  # Backup original package.json
-  cp /usr/local/lib/node_modules/vroom-express/package.json /usr/local/lib/node_modules/vroom-express/package.json.bak
+# Try to override the port by modifying the vroom-express source code directly
+if [ -f /usr/local/lib/node_modules/vroom-express/src/index.js ]; then
+  # Backup original index.js
+  cp /usr/local/lib/node_modules/vroom-express/src/index.js /usr/local/lib/node_modules/vroom-express/src/index.js.bak
   
-  # Modify the start script to use the correct port
-  sed -i "s/\"start\": \".*\"/\"start\": \"node src\/index.js --port ${PORT} --host 0.0.0.0\"/" /usr/local/lib/node_modules/vroom-express/package.json
+  # Modify the port in the source code
+  sed -i "s/8080/${PORT}/g" /usr/local/lib/node_modules/vroom-express/src/index.js
 fi
 
 # Hand off to upstream entrypoint via bash (ensure no exec bit needed)
