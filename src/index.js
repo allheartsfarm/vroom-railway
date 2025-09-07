@@ -3,6 +3,9 @@ import { createServer } from "vroom-express";
 const app = await createServer();
 
 // Railway sets PORT at runtime - this is critical!
+console.log(`All environment variables:`);
+console.log(JSON.stringify(process.env, null, 2));
+
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 const host = "0.0.0.0"; // Use IPv4 only, avoid IPv6
 
