@@ -111,7 +111,7 @@ fi
 # Ensure access.log exists for vroom-express
 touch /conf/access.log
 
-# Ensure vroom-express uses Railway's PORT
+# Ensure vroom-express uses Railway's $PORT if provided; default 8080
 export PORT=${PORT:-8080}
 
 # Debug: Show what we're using for Valhalla

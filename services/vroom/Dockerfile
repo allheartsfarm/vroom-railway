@@ -4,8 +4,7 @@ FROM ghcr.io/vroom-project/vroom-docker:v1.14.0
 COPY scripts/entrypoint.sh /railway-entrypoint.sh
 RUN chmod +x /railway-entrypoint.sh
 
-ENV PORT=8080 \
-    VROOM_ROUTER=osrm \
+ENV VROOM_ROUTER=osrm \
     VROOM_LOG=/conf \
     OSRM_URL="" \
     OSRM_HOST="" \
