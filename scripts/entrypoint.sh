@@ -37,6 +37,7 @@ cliArgs:
   maxvehicles: 200
   override: true
   path: ''
+  host: '0.0.0.0'
   port: ${PORT}
   router: '${VROOM_ROUTER}'
   timeout: 300000
