@@ -7,5 +7,6 @@ numReplicas = 1
 restartPolicyType = "ON_FAILURE"
 
 [variables]
-# Force Railway to use our Dockerfile
-RAILWAY_DOCKERFILE_PATH = "Dockerfile"
+# Force Railway to use our Dockerfile path when deploying from GitHub
+# This must match the build.dockerfilePath above
+RAILWAY_DOCKERFILE_PATH = "services/vroom/Dockerfile"
