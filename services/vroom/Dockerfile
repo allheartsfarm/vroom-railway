@@ -32,5 +32,5 @@ ENV VROOM_ROUTER=valhalla \
 ENV NODE_OPTIONS="--dns-result-order=ipv4first"
 
 EXPOSE 8080
-CMD ["/railway-entrypoint.sh"You ]
+CMD ["/railway-entrypoint.sh"]
 
