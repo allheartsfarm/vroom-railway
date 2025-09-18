@@ -91,39 +91,15 @@ routingServers:
       host: '${ORS_HOST}/ors/v2'
       port: '${ORS_PORT}'
   valhalla:
-    auto:
+    car:
       host: '${VALHALLA_HOST_CLEAN}'
       port: '${VALHALLA_PORT_EFF}'
       use_https: ${VALHALLA_USE_HTTPS_NORM}
-    bicycle:
+    bike:
       host: '${VALHALLA_HOST_CLEAN}'
       port: '${VALHALLA_PORT_EFF}'
       use_https: ${VALHALLA_USE_HTTPS_NORM}
-    pedestrian:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: '${VALHALLA_PORT_EFF}'
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
-    motorcycle:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: '${VALHALLA_PORT_EFF}'
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
-    motor_scooter:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: '${VALHALLA_PORT_EFF}'
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
-    taxi:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: '${VALHALLA_PORT_EFF}'
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
-    hov:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: '${VALHALLA_PORT_EFF}'
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
-    truck:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: '${VALHALLA_PORT_EFF}'
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
-    bus:
+    foot:
       host: '${VALHALLA_HOST_CLEAN}'
       port: '${VALHALLA_PORT_EFF}'
       use_https: ${VALHALLA_USE_HTTPS_NORM}
