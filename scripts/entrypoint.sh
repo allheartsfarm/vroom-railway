@@ -34,6 +34,9 @@ if [[ "${FORCE_CONFIG_REWRITE:-}" == "1" ]]; then
 fi
 
 # Always (re)write config on boot so current env is applied
+# Remove any existing config first
+rm -f /conf/config.yml /vroom/config.yml /etc/vroom/config.yml 2>/dev/null || true
+
 cat > /conf/config.yml <<YAML
 cliArgs:
   geometry: false
