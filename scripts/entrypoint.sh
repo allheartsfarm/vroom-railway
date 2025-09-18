@@ -19,7 +19,11 @@ VALHALLA_USE_HTTPS_NORM=false
 if [ -n "${VALHALLA_PORT:-}" ]; then
   VALHALLA_PORT_EFF=${VALHALLA_PORT}
 else
-  VALHALLA_PORT_EFF=8080
+  if [ "${VALHALLA_USE_HTTPS_NORM}" = "true" ]; then
+    VALHALLA_PORT_EFF=443
+  else
+    VALHALLA_PORT_EFF=8080
+  fi
 fi
 
 # Remove OSRM/ORS defaults to force Valhalla usage
