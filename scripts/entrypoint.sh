@@ -30,10 +30,8 @@ fi
 
 mkdir -p /conf
 
-# Optional: force config regeneration on each boot when set
-if [[ "${FORCE_CONFIG_REWRITE:-}" == "1" ]]; then
-  rm -f /conf/config.yml || true
-fi
+# Always force config regeneration on each boot
+rm -f /conf/config.yml /vroom/config.yml /etc/vroom/config.yml 2>/dev/null || true
 
 # Always (re)write config on boot so current env is applied
 # Remove any existing config first
