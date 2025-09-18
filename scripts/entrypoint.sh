@@ -49,27 +49,20 @@ cliArgs:
   path: ''
   host: '0.0.0.0'
   port: ${PORT}
-  router: 'valhalla'
+  router: 'osrm'
   timeout: 10000
   baseurl: '/'
 routingServers:
-  valhalla:
+  osrm:
     car:
-      host: 'allheartsfarm-valhalla.up.railway.app'
-      port: 443
-      use_https: true
+      - host: 'localhost'
+        port: 5000
     bike:
-      host: 'allheartsfarm-valhalla.up.railway.app'
-      port: 443
-      use_https: true
+      - host: 'localhost'
+        port: 5000
     foot:
-      host: 'allheartsfarm-valhalla.up.railway.app'
-      port: 443
-      use_https: true
-    auto:
-      host: 'allheartsfarm-valhalla.up.railway.app'
-      port: 443
-      use_https: true
+      - host: 'localhost'
+        port: 5000
 YAML
 
 # Log the effective config for troubleshooting
