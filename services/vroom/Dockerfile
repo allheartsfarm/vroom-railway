@@ -8,7 +8,8 @@ ENV VROOM_ROUTER=valhalla \
     VROOM_LOG=/conf \
     VALHALLA_HOST=valhalla \
     VALHALLA_PORT=8080 \
-    VALHALLA_USE_HTTPS=false
+    VALHALLA_USE_HTTPS=false \
+    PORT=8080
 
 EXPOSE 8080
 CMD ["/railway-entrypoint.sh"]
