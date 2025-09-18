@@ -24,11 +24,7 @@ else
   fi
 fi
 
-OSRM_HOST=${OSRM_HOST:-osrm}
-OSRM_PORT=${OSRM_PORT:-5000}
-
-ORS_HOST=${ORS_HOST:-ors}
-ORS_PORT=${ORS_PORT:-8080}
+# Remove OSRM/ORS defaults to force Valhalla usage
 
 mkdir -p /conf
 
