@@ -38,84 +38,20 @@ fi
 
 # Always (re)write config on boot so current env is applied
 cat > /conf/config.yml <<YAML
-cliArgs:
-  geometry: false
-  planmode: false
-  threads: 4
-  explore: 5
-  limit: '1mb'
-  logdir: '/..'
-  logsize: '100M'
-  maxlocations: 1000
-  maxvehicles: 200
-  override: true
-  path: ''
-  host: '0.0.0.0'
-  port: ${PORT}
+vroom:
   router: '${VROOM_ROUTER}'
-  timeout: 300000
-  baseurl: '/'
-routingServers:
-  osrm:
-    car:
-      - host: '${OSRM_HOST}'
-        port: ${OSRM_PORT}
-    bike:
-      - host: '${OSRM_HOST}'
-        port: ${OSRM_PORT}
-    foot:
-      - host: '${OSRM_HOST}'
-        port: ${OSRM_PORT}
-  ors:
-    driving-car:
-      host: '${ORS_HOST}/ors/v2'
-      port: '${ORS_PORT}'
-    driving-hgv:
-      host: '${ORS_HOST}/ors/v2'
-      port: '${ORS_PORT}'
-    cycling-regular:
-      host: '${ORS_HOST}/ors/v2'
-      port: '${ORS_PORT}'
-    cycling-mountain:
-      host: '${ORS_HOST}/ors/v2'
-      port: '${ORS_PORT}'
-    cycling-road:
-      host: '${ORS_HOST}/ors/v2'
-      port: '${ORS_PORT}'
-    cycling-electric:
-      host: '${ORS_HOST}/ors/v2'
-      port: '${ORS_PORT}'
-    foot-walking:
-      host: '${ORS_HOST}/ors/v2'
-      port: '${ORS_PORT}'
-    foot-hiking:
-      host: '${ORS_HOST}/ors/v2'
-      port: '${ORS_PORT}'
+  geometry: false
+  threads: 4
+routing:
   valhalla:
-    auto:
+    servers:
       - host: '${VALHALLA_HOST_CLEAN}'
         port: ${VALHALLA_PORT_EFF}
         use_https: ${VALHALLA_USE_HTTPS_NORM}
-    car:
-      - host: '${VALHALLA_HOST_CLEAN}'
-        port: ${VALHALLA_PORT_EFF}
-        use_https: ${VALHALLA_USE_HTTPS_NORM}
-    bicycle:
-      - host: '${VALHALLA_HOST_CLEAN}'
-        port: ${VALHALLA_PORT_EFF}
-        use_https: ${VALHALLA_USE_HTTPS_NORM}
-    bike:
-      - host: '${VALHALLA_HOST_CLEAN}'
-        port: ${VALHALLA_PORT_EFF}
-        use_https: ${VALHALLA_USE_HTTPS_NORM}
-    pedestrian:
-      - host: '${VALHALLA_HOST_CLEAN}'
-        port: ${VALHALLA_PORT_EFF}
-        use_https: ${VALHALLA_USE_HTTPS_NORM}
-    foot:
-      - host: '${VALHALLA_HOST_CLEAN}'
-        port: ${VALHALLA_PORT_EFF}
-        use_https: ${VALHALLA_USE_HTTPS_NORM}
+  osrm:
+    servers:
+      - host: '${OSRM_HOST}'
+        port: ${OSRM_PORT}
 YAML
 
 # Log the effective config for troubleshooting
