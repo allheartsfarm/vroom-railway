@@ -23,6 +23,7 @@ const server = http.createServer((clientReq, clientRes) => {
             car: process.env.CAR_COSTING || "auto",
             bike: process.env.BIKE_COSTING || "bicycle",
             foot: process.env.FOOT_COSTING || "pedestrian",
+            truck: process.env.TRUCK_COSTING || "truck",
           };
           if (
             json.costing &&
@@ -51,6 +52,7 @@ const server = http.createServer((clientReq, clientRes) => {
           car: process.env.CAR_COSTING || "auto",
           bike: process.env.BIKE_COSTING || "bicycle",
           foot: process.env.FOOT_COSTING || "pedestrian",
+          truck: process.env.TRUCK_COSTING || "truck",
         };
         if (
           parsed &&

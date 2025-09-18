@@ -27,6 +27,7 @@ export TARGET_PORT=${VALHALLA_PORT:-443}
 export CAR_COSTING=${CAR_COSTING:-auto}
 export BIKE_COSTING=${BIKE_COSTING:-bicycle}
 export FOOT_COSTING=${FOOT_COSTING:-pedestrian}
+export TRUCK_COSTING=${TRUCK_COSTING:-truck}
 node /proxy.js &
 
 # Write vroom-express configuration to /conf/config.yml pointing to local proxy
