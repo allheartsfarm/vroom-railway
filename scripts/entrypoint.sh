@@ -51,21 +51,21 @@ cliArgs:
 routingServers:
   valhalla:
     car:
-      host: '${VALHALLA_HOST}'
-      port: ${VALHALLA_PORT}
-      use_https: ${VALHALLA_USE_HTTPS}
+      host: 'allheartsfarm-valhalla.up.railway.app'
+      port: 443
+      use_https: true
     bike:
-      host: '${VALHALLA_HOST}'
-      port: ${VALHALLA_PORT}
-      use_https: ${VALHALLA_USE_HTTPS}
+      host: 'allheartsfarm-valhalla.up.railway.app'
+      port: 443
+      use_https: true
     foot:
-      host: '${VALHALLA_HOST}'
-      port: ${VALHALLA_PORT}
-      use_https: ${VALHALLA_USE_HTTPS}
+      host: 'allheartsfarm-valhalla.up.railway.app'
+      port: 443
+      use_https: true
     auto:
-      host: '${VALHALLA_HOST}'
-      port: ${VALHALLA_PORT}
-      use_https: ${VALHALLA_USE_HTTPS}
+      host: 'allheartsfarm-valhalla.up.railway.app'
+      port: 443
+      use_https: true
 YAML
 
 # Log the effective config for troubleshooting
