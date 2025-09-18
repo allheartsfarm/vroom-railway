@@ -1,13 +1,7 @@
 FROM --platform=linux/amd64 vroomvrp/vroom-docker:v1.9.0
 
-# Copy custom entrypoint
-COPY scripts/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# Set environment variables for Valhalla
-ENV VALHALLA_HOST=allheartsfarm-valhalla.up.railway.app \
-    VALHALLA_PORT=443 \
-    VALHALLA_USE_HTTPS=true
+# Set environment variables
+ENV VROOM_ROUTER=osrm
 
 EXPOSE 8080
-CMD ["/entrypoint.sh"]
+CMD ["vroom-express"]
