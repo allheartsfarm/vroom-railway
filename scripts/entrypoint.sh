@@ -38,18 +38,45 @@ fi
 
 # Always (re)write config on boot so current env is applied
 cat > /conf/config.yml <<YAML
-vroom:
-  router: '${VROOM_ROUTER}'
+cliArgs:
   geometry: false
+  planmode: false
   threads: 4
-routing:
+  explore: 5
+  limit: '1mb'
+  logdir: '/..'
+  logsize: '100M'
+  maxlocations: 1000
+  maxvehicles: 200
+  override: true
+  path: ''
+  host: '0.0.0.0'
+  port: ${PORT}
+  router: '${VROOM_ROUTER}'
+  timeout: 300000
+  baseurl: '/'
+routingServers:
   valhalla:
-    servers:
+    car:
+      - host: '${VALHALLA_HOST_CLEAN}'
+        port: ${VALHALLA_PORT_EFF}
+        use_https: ${VALHALLA_USE_HTTPS_NORM}
+    bike:
+      - host: '${VALHALLA_HOST_CLEAN}'
+        port: ${VALHALLA_PORT_EFF}
+        use_https: ${VALHALLA_USE_HTTPS_NORM}
+    foot:
       - host: '${VALHALLA_HOST_CLEAN}'
         port: ${VALHALLA_PORT_EFF}
         use_https: ${VALHALLA_USE_HTTPS_NORM}
   osrm:
-    servers:
+    car:
+      - host: '${OSRM_HOST}'
+        port: ${OSRM_PORT}
+    bike:
+      - host: '${OSRM_HOST}'
+        port: ${OSRM_PORT}
+    foot:
       - host: '${OSRM_HOST}'
         port: ${OSRM_PORT}
 YAML
