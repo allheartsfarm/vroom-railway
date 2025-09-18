@@ -12,14 +12,45 @@ const port = process.env.PORT || 3000;
 
 // Generate vroom config.yml
 const generateVroomConfig = () => {
-  const rawHost = process.env.VALHALLA_HOST || "valhalla";
+  const rawHost =
+    process.env.VALHALLA_HOST || "allheartsfarm-valhalla.up.railway.app";
   const sanitizedHost = rawHost.replace(/^https?:\/\//i, "").replace(/\/$/, "");
   const useHttps =
-    String(process.env.VALHALLA_USE_HTTPS || "false").toLowerCase() === "true";
-  const port = process.env.VALHALLA_PORT || (useHttps ? "443" : "8080");
-  const config = `# Vroom configuration
+    String(process.env.VALHALLA_USE_HTTPS || "true").toLowerCase() === "true";
+  const port = process.env.VALHALLA_PORT || "443";
+  const router = process.env.VROOM_ROUTER || "valhalla";
+
+  let config;
+  if (router === "valhalla") {
+    config = `# Vroom configuration for Valhalla routing
+cliArgs:
+  router: 'valhalla'
+  port: 8080
+  geometry: true
+
+routingServers:
+  valhalla:
+    car:
+      host: '${sanitizedHost}'
+      port: '${port}'
+      use_https: ${useHttps}
+    bike:
+      host: '${sanitizedHost}'
+      port: '${port}'
+      use_https: ${useHttps}
+    foot:
+      host: '${sanitizedHost}'
+      port: '${port}'
+      use_https: ${useHttps}
+    auto:
+      host: '${sanitizedHost}'
+      port: '${port}'
+      use_https: ${useHttps}
+`;
+  } else {
+    config = `# Vroom configuration for OSRM routing
 vroom:
-  router: ${process.env.VROOM_ROUTER || "osrm"}
+  router: osrm
   geometry: true
   
 routing:
@@ -28,33 +59,41 @@ routing:
       - host: localhost
         port: 5000
 `;
+  }
 
   writeFileSync("/tmp/vroom-config.yml", config);
   console.log("Generated vroom config:", config);
 };
 
-// Start vroom-express in background
+// Start vroom in background
 let vroomProcess;
 const startVroom = () => {
-  console.log("Starting vroom-express...");
+  console.log("Starting vroom...");
   generateVroomConfig();
 
-  // Start vroom-express on port 8080
+  // Start vroom on port 8080
   vroomProcess = spawn(
-    "vroom-express",
-    ["--config", "/tmp/vroom-config.yml", "--port", "8080"],
+    "vroom",
+    ["--router", "valhalla", "--port", "8080"],
     {
       stdio: "inherit",
-      env: { ...process.env, PORT: "8080" },
+      env: { 
+        ...process.env, 
+        PORT: "8080",
+        VROOM_ROUTER: "valhalla",
+        VROOM_VALHALLA_HOST: process.env.VALHALLA_HOST || "allheartsfarm-valhalla.up.railway.app",
+        VROOM_VALHALLA_PORT: process.env.VALHALLA_PORT || "443",
+        VROOM_VALHALLA_USE_HTTPS: process.env.VALHALLA_USE_HTTPS || "true"
+      },
     }
   );
 
   vroomProcess.on("error", (err) => {
-    console.error("Failed to start vroom-express:", err);
+    console.error("Failed to start vroom:", err);
   });
 
   vroomProcess.on("exit", (code) => {
-    console.log("vroom-express exited with code:", code);
+    console.log("vroom exited with code:", code);
   });
 };
 
@@ -63,19 +102,15 @@ app.get("/health", (req, res) => {
   res.json({
     ok: true,
     port,
-    vroom_router: process.env.VROOM_ROUTER || "osrm",
-    valhalla_host: (process.env.VALHALLA_HOST || "valhalla")
+    vroom_router: process.env.VROOM_ROUTER || "valhalla",
+    valhalla_host: (
+      process.env.VALHALLA_HOST || "allheartsfarm-valhalla.up.railway.app"
+    )
       .replace(/^https?:\/\//i, "")
       .replace(/\/$/, ""),
     valhalla_use_https:
-      String(process.env.VALHALLA_USE_HTTPS || "false").toLowerCase() ===
-      "true",
-    valhalla_port:
-      process.env.VALHALLA_PORT ||
-      (String(process.env.VALHALLA_USE_HTTPS || "false").toLowerCase() ===
-      "true"
-        ? "443"
-        : "8080"),
+      String(process.env.VALHALLA_USE_HTTPS || "true").toLowerCase() === "true",
+    valhalla_port: process.env.VALHALLA_PORT || "443",
   });
 });
 

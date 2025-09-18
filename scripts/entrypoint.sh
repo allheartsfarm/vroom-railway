@@ -3,17 +3,26 @@ set -e
 
 echo "Starting VROOM with Valhalla routing..."
 
-# Defaults
-PORT=${PORT:-8080}
-VROOM_ROUTER=${VROOM_ROUTER:-valhalla}
-VALHALLA_HOST=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
-VALHALLA_PORT=${VALHALLA_PORT:-443}
-VALHALLA_USE_HTTPS=${VALHALLA_USE_HTTPS:-true}
+# Set environment variables for Valhalla
+export VROOM_ROUTER=valhalla
+export VALHALLA_HOST=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
+export VALHALLA_PORT=443
+export VALHALLA_USE_HTTPS=${VALHALLA_USE_HTTPS:-true}
+export PORT=${PORT:-8080}
 
+echo "=== ENVIRONMENT VARIABLES ==="
+echo "VROOM_ROUTER: $VROOM_ROUTER"
+echo "VALHALLA_HOST: $VALHALLA_HOST"
+echo "VALHALLA_PORT: $VALHALLA_PORT"
+echo "VALHALLA_USE_HTTPS: $VALHALLA_USE_HTTPS"
+echo "PORT: $PORT"
+echo "============================="
+
+# Create config directory and file
 mkdir -p /conf
 
-# Create VROOM configuration for OSRM
-cat > /conf/config.yml <<YAML
+# Create a simple VROOM configuration
+cat > /conf/config.yml <<EOF
 cliArgs:
   geometry: true
   planmode: false
@@ -49,11 +58,12 @@ routingServers:
       host: '${VALHALLA_HOST}'
       port: ${VALHALLA_PORT}
       use_https: ${VALHALLA_USE_HTTPS}
-YAML
+EOF
 
 echo "=== VROOM CONFIG ==="
 cat /conf/config.yml
 echo "===================="
 
-# Start vroom using the default command from the image
-exec vroom-express 
+# Start vroom-express with proper permissions
+chmod +x /usr/local/bin/vroom-express 2>/dev/null || true
+exec /usr/local/bin/vroom-express 
