@@ -3,11 +3,24 @@ set -euo pipefail
 
 # Defaults (can be overridden by env)
 PORT=${PORT:-3000}
-VROOM_ROUTER=${VROOM_ROUTER:-osrm}
+VROOM_ROUTER=${VROOM_ROUTER:-valhalla}
 VROOM_LOG=${VROOM_LOG:-/conf}
 
-VALHALLA_HOST=${VALHALLA_HOST:-valhalla}
-VALHALLA_PORT=${VALHALLA_PORT:-8002}
+# Sanitize Valhalla host and normalize HTTPS/port
+RAW_VALHALLA_HOST=${VALHALLA_HOST:-valhalla}
+VALHALLA_HOST_CLEAN=${RAW_VALHALLA_HOST#http://}
+VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN#https://}
+VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN%/}
+VALHALLA_USE_HTTPS_NORM=$(echo "${VALHALLA_USE_HTTPS:-true}" | tr '[:upper:]' '[:lower:]')
+if [ -n "${VALHALLA_PORT:-}" ]; then
+  VALHALLA_PORT_EFF=${VALHALLA_PORT}
+else
+  if [ "${VALHALLA_USE_HTTPS_NORM}" = "true" ]; then
+    VALHALLA_PORT_EFF=443
+  else
+    VALHALLA_PORT_EFF=80
+  fi
+fi
 
 OSRM_HOST=${OSRM_HOST:-osrm}
 OSRM_PORT=${OSRM_PORT:-5000}
@@ -79,41 +92,41 @@ routingServers:
       port: '${ORS_PORT}'
   valhalla:
     auto:
-      host: '${VALHALLA_HOST}'
-      port: '${VALHALLA_PORT}'
-      use_https: ${VALHALLA_USE_HTTPS:-false}
+      host: '${VALHALLA_HOST_CLEAN}'
+      port: '${VALHALLA_PORT_EFF}'
+      use_https: ${VALHALLA_USE_HTTPS_NORM}
     bicycle:
-      host: '${VALHALLA_HOST}'
-      port: '${VALHALLA_PORT}'
-      use_https: ${VALHALLA_USE_HTTPS:-false}
+      host: '${VALHALLA_HOST_CLEAN}'
+      port: '${VALHALLA_PORT_EFF}'
+      use_https: ${VALHALLA_USE_HTTPS_NORM}
     pedestrian:
-      host: '${VALHALLA_HOST}'
-      port: '${VALHALLA_PORT}'
-      use_https: ${VALHALLA_USE_HTTPS:-false}
+      host: '${VALHALLA_HOST_CLEAN}'
+      port: '${VALHALLA_PORT_EFF}'
+      use_https: ${VALHALLA_USE_HTTPS_NORM}
     motorcycle:
-      host: '${VALHALLA_HOST}'
-      port: '${VALHALLA_PORT}'
-      use_https: ${VALHALLA_USE_HTTPS:-false}
+      host: '${VALHALLA_HOST_CLEAN}'
+      port: '${VALHALLA_PORT_EFF}'
+      use_https: ${VALHALLA_USE_HTTPS_NORM}
     motor_scooter:
-      host: '${VALHALLA_HOST}'
-      port: '${VALHALLA_PORT}'
-      use_https: ${VALHALLA_USE_HTTPS:-false}
+      host: '${VALHALLA_HOST_CLEAN}'
+      port: '${VALHALLA_PORT_EFF}'
+      use_https: ${VALHALLA_USE_HTTPS_NORM}
     taxi:
-      host: '${VALHALLA_HOST}'
-      port: '${VALHALLA_PORT}'
-      use_https: ${VALHALLA_USE_HTTPS:-false}
+      host: '${VALHALLA_HOST_CLEAN}'
+      port: '${VALHALLA_PORT_EFF}'
+      use_https: ${VALHALLA_USE_HTTPS_NORM}
     hov:
-      host: '${VALHALLA_HOST}'
-      port: '${VALHALLA_PORT}'
-      use_https: ${VALHALLA_USE_HTTPS:-false}
+      host: '${VALHALLA_HOST_CLEAN}'
+      port: '${VALHALLA_PORT_EFF}'
+      use_https: ${VALHALLA_USE_HTTPS_NORM}
     truck:
-      host: '${VALHALLA_HOST}'
-      port: '${VALHALLA_PORT}'
-      use_https: ${VALHALLA_USE_HTTPS:-false}
+      host: '${VALHALLA_HOST_CLEAN}'
+      port: '${VALHALLA_PORT_EFF}'
+      use_https: ${VALHALLA_USE_HTTPS_NORM}
     bus:
-      host: '${VALHALLA_HOST}'
-      port: '${VALHALLA_PORT}'
-      use_https: ${VALHALLA_USE_HTTPS:-false}
+      host: '${VALHALLA_HOST_CLEAN}'
+      port: '${VALHALLA_PORT_EFF}'
+      use_https: ${VALHALLA_USE_HTTPS_NORM}
 YAML
 
 # Log the effective config for troubleshooting
@@ -130,9 +143,10 @@ export PORT=${PORT:-8080}
 # Debug: Show what we're using for Valhalla
 echo "=== VROOM CONFIG DEBUG ==="
 echo "VROOM_ROUTER: $VROOM_ROUTER"
-echo "VALHALLA_HOST: $VALHALLA_HOST"
-echo "VALHALLA_PORT: $VALHALLA_PORT"
-echo "VALHALLA_USE_HTTPS: $VALHALLA_USE_HTTPS"
+echo "VALHALLA_HOST (raw): $RAW_VALHALLA_HOST"
+echo "VALHALLA_HOST (clean): $VALHALLA_HOST_CLEAN"
+echo "VALHALLA_PORT (effective): $VALHALLA_PORT_EFF"
+echo "VALHALLA_USE_HTTPS (normalized): $VALHALLA_USE_HTTPS_NORM"
 echo "PORT: $PORT"
 echo "=========================="
 
