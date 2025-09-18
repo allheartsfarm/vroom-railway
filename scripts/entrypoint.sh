@@ -1,18 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Starting VROOM with Valhalla configuration..."
+echo "Starting VROOM with OSRM configuration..."
 
 # Defaults
 PORT=${PORT:-8080}
-VROOM_ROUTER=${VROOM_ROUTER:-valhalla}
-VALHALLA_HOST=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
-VALHALLA_PORT=${VALHALLA_PORT:-443}
-VALHALLA_USE_HTTPS=${VALHALLA_USE_HTTPS:-true}
+VROOM_ROUTER=${VROOM_ROUTER:-osrm}
 
 mkdir -p /conf
 
-# Generate config for Valhalla
+# Generate config for OSRM
 cat > /conf/config.yml <<YAML
 cliArgs:
   geometry: false
@@ -32,23 +29,16 @@ cliArgs:
   timeout: 10000
   baseurl: '/'
 routingServers:
-  valhalla:
+  osrm:
     car:
-      host: '${VALHALLA_HOST}'
-      port: ${VALHALLA_PORT}
-      use_https: ${VALHALLA_USE_HTTPS}
+      - host: 'localhost'
+        port: 5000
     bike:
-      host: '${VALHALLA_HOST}'
-      port: ${VALHALLA_PORT}
-      use_https: ${VALHALLA_USE_HTTPS}
+      - host: 'localhost'
+        port: 5000
     foot:
-      host: '${VALHALLA_HOST}'
-      port: ${VALHALLA_PORT}
-      use_https: ${VALHALLA_USE_HTTPS}
-    auto:
-      host: '${VALHALLA_HOST}'
-      port: ${VALHALLA_PORT}
-      use_https: ${VALHALLA_USE_HTTPS}
+      - host: 'localhost'
+        port: 5000
 YAML
 
 echo "=== RENDERED /conf/config.yml ==="
