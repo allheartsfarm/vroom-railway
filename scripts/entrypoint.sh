@@ -82,39 +82,39 @@ routingServers:
     auto:
       host: '${VALHALLA_HOST}'
       port: '${VALHALLA_PORT}'
-      https: ${VALHALLA_USE_HTTPS:-false}
+      use_https: ${VALHALLA_USE_HTTPS:-false}
     bicycle:
       host: '${VALHALLA_HOST}'
       port: '${VALHALLA_PORT}'
-      https: ${VALHALLA_USE_HTTPS:-false}
+      use_https: ${VALHALLA_USE_HTTPS:-false}
     pedestrian:
       host: '${VALHALLA_HOST}'
       port: '${VALHALLA_PORT}'
-      https: ${VALHALLA_USE_HTTPS:-false}
+      use_https: ${VALHALLA_USE_HTTPS:-false}
     motorcycle:
       host: '${VALHALLA_HOST}'
       port: '${VALHALLA_PORT}'
-      https: ${VALHALLA_USE_HTTPS:-false}
+      use_https: ${VALHALLA_USE_HTTPS:-false}
     motor_scooter:
       host: '${VALHALLA_HOST}'
       port: '${VALHALLA_PORT}'
-      https: ${VALHALLA_USE_HTTPS:-false}
+      use_https: ${VALHALLA_USE_HTTPS:-false}
     taxi:
       host: '${VALHALLA_HOST}'
       port: '${VALHALLA_PORT}'
-      https: ${VALHALLA_USE_HTTPS:-false}
+      use_https: ${VALHALLA_USE_HTTPS:-false}
     hov:
       host: '${VALHALLA_HOST}'
       port: '${VALHALLA_PORT}'
-      https: ${VALHALLA_USE_HTTPS:-false}
+      use_https: ${VALHALLA_USE_HTTPS:-false}
     truck:
       host: '${VALHALLA_HOST}'
       port: '${VALHALLA_PORT}'
-      https: ${VALHALLA_USE_HTTPS:-false}
+      use_https: ${VALHALLA_USE_HTTPS:-false}
     bus:
       host: '${VALHALLA_HOST}'
       port: '${VALHALLA_PORT}'
-      https: ${VALHALLA_USE_HTTPS:-false}
+      use_https: ${VALHALLA_USE_HTTPS:-false}
 YAML
 fi
 
