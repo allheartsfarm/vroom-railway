@@ -1,4 +1,4 @@
-  FROM --platform=linux/amd64 ghcr.io/vroom-project/vroom-docker:v1.14.0
+  FROM --platform=linux/amd64 gis-ops/vroom-docker:latest
 
 # Copy custom entrypoint with Valhalla configuration
 COPY scripts/entrypoint.sh /entrypoint.sh
