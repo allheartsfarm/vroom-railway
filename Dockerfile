@@ -3,6 +3,8 @@ FROM ghcr.io/vroom-project/vroom-docker:v1.14.0
 # Install Node.js for our proxy server
 RUN apt-get update && apt-get install -y \
     curl \
+    ca-certificates \
+    && update-ca-certificates || true \
     && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
@@ -21,7 +23,7 @@ COPY server.js ./
 ENV VROOM_ROUTER=valhalla \
     VROOM_LOG=/conf \
     # Use Valhalla public URL to avoid internal networking issues
-    VALHALLA_HOST=https://allheartsfarm-valhalla.up.railway.app \
+    VALHALLA_HOST=allheartsfarm-valhalla.up.railway.app \
     VALHALLA_PORT=443 \
     VALHALLA_USE_HTTPS=true
 
