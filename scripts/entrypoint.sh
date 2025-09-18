@@ -57,14 +57,14 @@ cliArgs:
 routingServers:
   osrm:
     car:
-      host: '${OSRM_HOST}'
-      port: '${OSRM_PORT}'
+      - host: '${OSRM_HOST}'
+        port: ${OSRM_PORT}
     bike:
-      host: '${OSRM_HOST}'
-      port: '${OSRM_PORT}'
+      - host: '${OSRM_HOST}'
+        port: ${OSRM_PORT}
     foot:
-      host: '${OSRM_HOST}'
-      port: '${OSRM_PORT}'
+      - host: '${OSRM_HOST}'
+        port: ${OSRM_PORT}
   ors:
     driving-car:
       host: '${ORS_HOST}/ors/v2'
@@ -91,18 +91,18 @@ routingServers:
       host: '${ORS_HOST}/ors/v2'
       port: '${ORS_PORT}'
   valhalla:
-    car:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: '${VALHALLA_PORT_EFF}'
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
-    bike:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: '${VALHALLA_PORT_EFF}'
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
-    foot:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: '${VALHALLA_PORT_EFF}'
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
+    auto:
+      - host: '${VALHALLA_HOST_CLEAN}'
+        port: ${VALHALLA_PORT_EFF}
+        use_https: ${VALHALLA_USE_HTTPS_NORM}
+    bicycle:
+      - host: '${VALHALLA_HOST_CLEAN}'
+        port: ${VALHALLA_PORT_EFF}
+        use_https: ${VALHALLA_USE_HTTPS_NORM}
+    pedestrian:
+      - host: '${VALHALLA_HOST_CLEAN}'
+        port: ${VALHALLA_PORT_EFF}
+        use_https: ${VALHALLA_USE_HTTPS_NORM}
 YAML
 
 # Log the effective config for troubleshooting
