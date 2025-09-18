@@ -52,20 +52,20 @@ routingServers:
   valhalla:
     car:
       host: 'allheartsfarm-valhalla.up.railway.app'
-      port: 8080
-      use_https: false
+      port: 443
+      use_https: true
     bike:
       host: 'allheartsfarm-valhalla.up.railway.app'
-      port: 8080
-      use_https: false
+      port: 443
+      use_https: true
     foot:
       host: 'allheartsfarm-valhalla.up.railway.app'
-      port: 8080
-      use_https: false
+      port: 443
+      use_https: true
     auto:
       host: 'allheartsfarm-valhalla.up.railway.app'
-      port: 8080
-      use_https: false
+      port: 443
+      use_https: true
 YAML
 
 # Log the effective config for troubleshooting
