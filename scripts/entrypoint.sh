@@ -5,6 +5,7 @@ set -euo pipefail
 PORT=${PORT:-3000}
 # Force Valhalla router to avoid OSRM fallback when env is misconfigured
 VROOM_ROUTER=valhalla
+export VROOM_ROUTER=valhalla
 VROOM_LOG=${VROOM_LOG:-/conf}
 
 # Sanitize Valhalla host and normalize HTTPS/port
