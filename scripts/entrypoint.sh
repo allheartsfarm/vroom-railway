@@ -53,15 +53,5 @@ cat /conf/config.yml
 echo "===================="
 
 # Start vroom-express
-# Try different possible commands
-if command -v vroom-express >/dev/null 2>&1; then
-    exec vroom-express
-elif [ -f /usr/local/bin/vroom-express ]; then
-    exec /usr/local/bin/vroom-express
-elif [ -f /usr/bin/vroom-express ]; then
-    exec /usr/bin/vroom-express
-else
-    echo "vroom-express not found, trying to find it..."
-    find / -name "*vroom*" -type f 2>/dev/null | head -10
-    exit 1
-fi
+# The correct command is 'vroom' not 'vroom-express'
+exec /usr/local/bin/vroom
