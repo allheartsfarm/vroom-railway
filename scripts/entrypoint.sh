@@ -13,9 +13,9 @@ RAW_VALHALLA_HOST=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
 VALHALLA_HOST_CLEAN=${RAW_VALHALLA_HOST#http://}
 VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN#https://}
 VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN%/}
-# Force IP address to avoid DNS issues
-VALHALLA_HOST_CLEAN=66.33.22.61
-VALHALLA_USE_HTTPS_NORM=false
+# Use the environment variables directly
+VALHALLA_HOST_CLEAN=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
+VALHALLA_USE_HTTPS_NORM=$(echo "${VALHALLA_USE_HTTPS:-true}" | tr '[:upper:]' '[:lower:]')
 if [ -n "${VALHALLA_PORT:-}" ]; then
   VALHALLA_PORT_EFF=${VALHALLA_PORT}
 else
