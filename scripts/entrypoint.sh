@@ -34,21 +34,21 @@ cliArgs:
 routingServers:
   valhalla:
     car:
-      host: 'allheartsfarm-valhalla.up.railway.app'
-      port: 443
-      use_https: true
+      host: '${VALHALLA_HOST}'
+      port: ${VALHALLA_PORT}
+      use_https: ${VALHALLA_USE_HTTPS}
     bike:
-      host: 'allheartsfarm-valhalla.up.railway.app'
-      port: 443
-      use_https: true
+      host: '${VALHALLA_HOST}'
+      port: ${VALHALLA_PORT}
+      use_https: ${VALHALLA_USE_HTTPS}
     foot:
-      host: 'allheartsfarm-valhalla.up.railway.app'
-      port: 443
-      use_https: true
+      host: '${VALHALLA_HOST}'
+      port: ${VALHALLA_PORT}
+      use_https: ${VALHALLA_USE_HTTPS}
     auto:
-      host: 'allheartsfarm-valhalla.up.railway.app'
-      port: 443
-      use_https: true
+      host: '${VALHALLA_HOST}'
+      port: ${VALHALLA_PORT}
+      use_https: ${VALHALLA_USE_HTTPS}
 YAML
 
 echo "=== VROOM CONFIG ==="
