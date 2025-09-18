@@ -56,29 +56,18 @@ cliArgs:
   timeout: 300000
   baseurl: '/'
 routingServers:
-  valhalla:
-    car:
-      - host: '${VALHALLA_HOST_CLEAN}'
-        port: ${VALHALLA_PORT_EFF}
-        use_https: ${VALHALLA_USE_HTTPS_NORM}
-    bike:
-      - host: '${VALHALLA_HOST_CLEAN}'
-        port: ${VALHALLA_PORT_EFF}
-        use_https: ${VALHALLA_USE_HTTPS_NORM}
-    foot:
-      - host: '${VALHALLA_HOST_CLEAN}'
-        port: ${VALHALLA_PORT_EFF}
-        use_https: ${VALHALLA_USE_HTTPS_NORM}
-  osrm:
-    car:
-      - host: '${OSRM_HOST}'
-        port: ${OSRM_PORT}
-    bike:
-      - host: '${OSRM_HOST}'
-        port: ${OSRM_PORT}
-    foot:
-      - host: '${OSRM_HOST}'
-        port: ${OSRM_PORT}
+  car:
+    - host: '${VALHALLA_HOST_CLEAN}'
+      port: ${VALHALLA_PORT_EFF}
+      use_https: ${VALHALLA_USE_HTTPS_NORM}
+  bike:
+    - host: '${VALHALLA_HOST_CLEAN}'
+      port: ${VALHALLA_PORT_EFF}
+      use_https: ${VALHALLA_USE_HTTPS_NORM}
+  foot:
+    - host: '${VALHALLA_HOST_CLEAN}'
+      port: ${VALHALLA_PORT_EFF}
+      use_https: ${VALHALLA_USE_HTTPS_NORM}
 YAML
 
 # Log the effective config for troubleshooting

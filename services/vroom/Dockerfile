@@ -1,4 +1,4 @@
-FROM vroomvrp/vroom-docker:v1.10.0
+FROM ghcr.io/vroom-project/vroom-docker:v1.14.0
 
 # Custom entrypoint to render config.yml from env and start vroom-express
 COPY scripts/entrypoint.sh /railway-entrypoint.sh
