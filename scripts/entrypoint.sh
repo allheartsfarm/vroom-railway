@@ -52,5 +52,5 @@ echo "=== VROOM CONFIG ==="
 cat /conf/config.yml
 echo "===================="
 
-# Start vroom-express
-exec vroom-express
+# Start vroom-express using the default entrypoint
+exec /docker-entrypoint.sh
