@@ -3,15 +3,6 @@ set -e
 
 echo "Starting VROOM with Valhalla configuration..."
 
-# Debug environment
-echo "=== ENVIRONMENT ==="
-echo "PORT: ${PORT:-not set}"
-echo "VROOM_ROUTER: ${VROOM_ROUTER:-not set}"
-echo "VALHALLA_HOST: ${VALHALLA_HOST:-not set}"
-echo "VALHALLA_PORT: ${VALHALLA_PORT:-not set}"
-echo "VALHALLA_USE_HTTPS: ${VALHALLA_USE_HTTPS:-not set}"
-echo "==================="
-
 # Defaults
 PORT=${PORT:-8080}
 VROOM_ROUTER=${VROOM_ROUTER:-valhalla}
@@ -63,12 +54,6 @@ YAML
 echo "=== RENDERED /conf/config.yml ==="
 cat /conf/config.yml
 echo "=================================="
-
-# Test if vroom-express exists
-echo "=== TESTING VROOM-EXPRESS ==="
-which vroom-express || echo "vroom-express not found in PATH"
-ls -la /usr/local/bin/ | grep vroom || echo "No vroom binaries in /usr/local/bin/"
-echo "=============================="
 
 # Hand off to upstream entrypoint which starts vroom-express
 exec /bin/bash /docker-entrypoint.sh
