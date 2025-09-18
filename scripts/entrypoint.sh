@@ -13,12 +13,11 @@ RAW_VALHALLA_HOST=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
 VALHALLA_HOST_CLEAN=${RAW_VALHALLA_HOST#http://}
 VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN#https://}
 VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN%/}
-# Use the environment variables directly
-VALHALLA_HOST_CLEAN=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
-# Force HTTP to avoid SSL issues
-VALHALLA_USE_HTTPS_NORM=false
-# Force port 8080 for HTTP
-VALHALLA_PORT_EFF=8080
+# Use IP address to avoid DNS issues
+VALHALLA_HOST_CLEAN=66.33.22.61
+# Use HTTPS on port 443
+VALHALLA_USE_HTTPS_NORM=true
+VALHALLA_PORT_EFF=443
 
 # Remove OSRM/ORS defaults to force Valhalla usage
 
