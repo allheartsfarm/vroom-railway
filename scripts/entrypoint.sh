@@ -15,15 +15,11 @@ VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN#https://}
 VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN%/}
 # Force IP address to avoid DNS issues
 VALHALLA_HOST_CLEAN=66.33.22.61
-VALHALLA_USE_HTTPS_NORM=$(echo "${VALHALLA_USE_HTTPS:-true}" | tr '[:upper:]' '[:lower:]')
+VALHALLA_USE_HTTPS_NORM=false
 if [ -n "${VALHALLA_PORT:-}" ]; then
   VALHALLA_PORT_EFF=${VALHALLA_PORT}
 else
-  if [ "${VALHALLA_USE_HTTPS_NORM}" = "true" ]; then
-    VALHALLA_PORT_EFF=443
-  else
-    VALHALLA_PORT_EFF=80
-  fi
+  VALHALLA_PORT_EFF=8080
 fi
 
 # Remove OSRM/ORS defaults to force Valhalla usage
