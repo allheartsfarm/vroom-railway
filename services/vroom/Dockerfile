@@ -1,19 +1,15 @@
 FROM ghcr.io/vroom-project/vroom-docker:v1.14.0
 
-# Install Node.js and npm
-RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
+# Custom entrypoint to render config.yml from env and start vroom-express
+COPY scripts/entrypoint.sh /railway-entrypoint.sh
+RUN chmod +x /railway-entrypoint.sh
 
-# Copy the server.js file
-COPY server.js /app/server.js
-COPY package.json /app/package.json
-
-# Install dependencies
-WORKDIR /app
-RUN npm install
-
-# Set environment variables
-ENV VROOM_ROUTER=osrm
+ENV VROOM_ROUTER=valhalla \
+    VROOM_LOG=/conf \
+    VALHALLA_HOST=allheartsfarm-valhalla.up.railway.app \
+    VALHALLA_PORT=443 \
+    VALHALLA_USE_HTTPS=true
 
 EXPOSE 8080
-CMD ["node", "server.js"]
+CMD ["/railway-entrypoint.sh"]
 
