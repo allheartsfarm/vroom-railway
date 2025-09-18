@@ -22,9 +22,8 @@ if [[ "${FORCE_CONFIG_REWRITE:-}" == "1" ]]; then
   rm -f /conf/config.yml || true
 fi
 
-# Only (re)write config if none present, so you can tweak in container
-if [[ ! -f /conf/config.yml ]]; then
-  cat > /conf/config.yml <<YAML
+# Always (re)write config on boot so current env is applied
+cat > /conf/config.yml <<YAML
 cliArgs:
   geometry: false
   planmode: false
@@ -116,7 +115,11 @@ routingServers:
       port: '${VALHALLA_PORT}'
       use_https: ${VALHALLA_USE_HTTPS:-false}
 YAML
-fi
+
+# Log the effective config for troubleshooting
+echo "=== RENDERED /conf/config.yml ==="
+sed -e 's/^/  /' /conf/config.yml || true
+echo "=================================="
 
 # Ensure access.log exists for vroom-express
 touch /conf/access.log
