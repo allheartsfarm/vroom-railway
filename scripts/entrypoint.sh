@@ -55,5 +55,5 @@ echo "=== VROOM CONFIG ==="
 cat /conf/config.yml
 echo "===================="
 
-# Start vroom-express with Valhalla router
-exec vroom-express
+# Start vroom with Valhalla router
+exec vroom
