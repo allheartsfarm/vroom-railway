@@ -25,7 +25,7 @@ ENV VROOM_ROUTER=osrm \
 
 ENV VROOM_ROUTER=valhalla \
     VROOM_LOG=/conf \
-    VALHALLA_HOST=valhalla \
+    VALHALLA_HOST=allheartsfarm-valhalla.up.railway.app \
     VALHALLA_PORT=443 \
     VALHALLA_USE_HTTPS=true
 
