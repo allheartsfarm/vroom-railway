@@ -95,11 +95,23 @@ routingServers:
       - host: '${VALHALLA_HOST_CLEAN}'
         port: ${VALHALLA_PORT_EFF}
         use_https: ${VALHALLA_USE_HTTPS_NORM}
+    car:
+      - host: '${VALHALLA_HOST_CLEAN}'
+        port: ${VALHALLA_PORT_EFF}
+        use_https: ${VALHALLA_USE_HTTPS_NORM}
     bicycle:
       - host: '${VALHALLA_HOST_CLEAN}'
         port: ${VALHALLA_PORT_EFF}
         use_https: ${VALHALLA_USE_HTTPS_NORM}
+    bike:
+      - host: '${VALHALLA_HOST_CLEAN}'
+        port: ${VALHALLA_PORT_EFF}
+        use_https: ${VALHALLA_USE_HTTPS_NORM}
     pedestrian:
+      - host: '${VALHALLA_HOST_CLEAN}'
+        port: ${VALHALLA_PORT_EFF}
+        use_https: ${VALHALLA_USE_HTTPS_NORM}
+    foot:
       - host: '${VALHALLA_HOST_CLEAN}'
         port: ${VALHALLA_PORT_EFF}
         use_https: ${VALHALLA_USE_HTTPS_NORM}
