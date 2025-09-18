@@ -5,15 +5,14 @@ echo "Starting VROOM with Valhalla routing..."
 
 # Defaults
 PORT=${PORT:-8080}
+VROOM_ROUTER=${VROOM_ROUTER:-valhalla}
 VALHALLA_HOST=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
 VALHALLA_PORT=${VALHALLA_PORT:-443}
 VALHALLA_USE_HTTPS=${VALHALLA_USE_HTTPS:-true}
 
 mkdir -p /conf
 
-# Create a custom config that uses Valhalla as a routing server
-# Since VROOM doesn't natively support Valhalla, we'll configure it to work
-# by treating Valhalla as an external routing service
+# Create VROOM configuration for Valhalla
 cat > /conf/config.yml <<YAML
 cliArgs:
   geometry: true
@@ -29,29 +28,32 @@ cliArgs:
   path: ''
   host: '0.0.0.0'
   port: ${PORT}
-  router: 'osrm'
+  router: '${VROOM_ROUTER}'
   timeout: 30000
   baseurl: '/'
 routingServers:
-  osrm:
+  valhalla:
     car:
-      - host: '${VALHALLA_HOST}'
-        port: ${VALHALLA_PORT}
-        use_https: ${VALHALLA_USE_HTTPS}
+      host: '${VALHALLA_HOST}'
+      port: ${VALHALLA_PORT}
+      use_https: ${VALHALLA_USE_HTTPS}
     bike:
-      - host: '${VALHALLA_HOST}'
-        port: ${VALHALLA_PORT}
-        use_https: ${VALHALLA_USE_HTTPS}
+      host: '${VALHALLA_HOST}'
+      port: ${VALHALLA_PORT}
+      use_https: ${VALHALLA_USE_HTTPS}
     foot:
-      - host: '${VALHALLA_HOST}'
-        port: ${VALHALLA_PORT}
-        use_https: ${VALHALLA_USE_HTTPS}
+      host: '${VALHALLA_HOST}'
+      port: ${VALHALLA_PORT}
+      use_https: ${VALHALLA_USE_HTTPS}
+    auto:
+      host: '${VALHALLA_HOST}'
+      port: ${VALHALLA_PORT}
+      use_https: ${VALHALLA_USE_HTTPS}
 YAML
 
 echo "=== VROOM CONFIG ==="
 cat /conf/config.yml
 echo "===================="
 
-# Start vroom-express
-# The correct command is 'vroom' not 'vroom-express'
-exec /usr/local/bin/vroom
+# Start vroom-express with Valhalla router
+exec vroom-express
