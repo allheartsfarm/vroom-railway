@@ -12,7 +12,7 @@ VALHALLA_USE_HTTPS=${VALHALLA_USE_HTTPS:-true}
 
 mkdir -p /conf
 
-# Create VROOM configuration for Valhalla
+# Create VROOM configuration for OSRM
 cat > /conf/config.yml <<YAML
 cliArgs:
   geometry: true
@@ -28,32 +28,32 @@ cliArgs:
   path: ''
   host: '0.0.0.0'
   port: ${PORT}
-  router: '${VROOM_ROUTER}'
+  router: 'valhalla'
   timeout: 30000
   baseurl: '/'
 routingServers:
   valhalla:
     car:
-      host: '${VALHALLA_HOST}'
-      port: ${VALHALLA_PORT}
-      use_https: ${VALHALLA_USE_HTTPS}
+      host: 'allheartsfarm-valhalla.up.railway.app'
+      port: 443
+      use_https: true
     bike:
-      host: '${VALHALLA_HOST}'
-      port: ${VALHALLA_PORT}
-      use_https: ${VALHALLA_USE_HTTPS}
+      host: 'allheartsfarm-valhalla.up.railway.app'
+      port: 443
+      use_https: true
     foot:
-      host: '${VALHALLA_HOST}'
-      port: ${VALHALLA_PORT}
-      use_https: ${VALHALLA_USE_HTTPS}
+      host: 'allheartsfarm-valhalla.up.railway.app'
+      port: 443
+      use_https: true
     auto:
-      host: '${VALHALLA_HOST}'
-      port: ${VALHALLA_PORT}
-      use_https: ${VALHALLA_USE_HTTPS}
+      host: 'allheartsfarm-valhalla.up.railway.app'
+      port: 443
+      use_https: true
 YAML
 
 echo "=== VROOM CONFIG ==="
 cat /conf/config.yml
 echo "===================="
 
-# Start vroom with Valhalla router
-exec vroom
+# Start vroom using the default command from the image
+exec vroom-express 
