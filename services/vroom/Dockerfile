@@ -9,5 +9,6 @@ ENV VALHALLA_HOST=allheartsfarm-valhalla.up.railway.app \
     VALHALLA_PORT=443 \
     VALHALLA_USE_HTTPS=true
 
+# Override the default entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
 EXPOSE 8080
-CMD ["/entrypoint.sh"]
