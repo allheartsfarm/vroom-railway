@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Debug: Show environment
+echo "=== ENVIRONMENT DEBUG ==="
+echo "VALHALLA_HOST: ${VALHALLA_HOST:-not set}"
+echo "VALHALLA_PORT: ${VALHALLA_PORT:-not set}"
+echo "VALHALLA_USE_HTTPS: ${VALHALLA_USE_HTTPS:-not set}"
+echo "VROOM_ROUTER: ${VROOM_ROUTER:-not set}"
+echo "=========================="
+
 # Defaults (can be overridden by env)
 PORT=${PORT:-3000}
 # Force Valhalla router to avoid OSRM fallback when env is misconfigured
@@ -24,10 +32,6 @@ VALHALLA_PORT_EFF=443
 mkdir -p /conf
 
 # Always force config regeneration on each boot
-rm -f /conf/config.yml /vroom/config.yml /etc/vroom/config.yml 2>/dev/null || true
-
-# Always (re)write config on boot so current env is applied
-# Remove any existing config first
 rm -f /conf/config.yml /vroom/config.yml /etc/vroom/config.yml 2>/dev/null || true
 
 cat > /conf/config.yml <<YAML
