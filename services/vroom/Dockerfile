@@ -12,10 +12,7 @@ WORKDIR /app
 RUN npm install
 
 # Set environment variables
-ENV VROOM_ROUTER=valhalla \
-    VALHALLA_HOST=valhalla \
-    VALHALLA_PORT=8080 \
-    VALHALLA_USE_HTTPS=false
+ENV VROOM_ROUTER=osrm
 
 EXPOSE 8080
 CMD ["node", "server.js"]

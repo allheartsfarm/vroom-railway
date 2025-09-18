@@ -12,23 +12,21 @@ const port = process.env.PORT || 3000;
 
 // Generate vroom config.yml
 const generateVroomConfig = () => {
-  const rawHost =
-    process.env.VALHALLA_HOST || "valhalla";
+  const rawHost = process.env.VALHALLA_HOST || "valhalla";
   const sanitizedHost = rawHost.replace(/^https?:\/\//i, "").replace(/\/$/, "");
   const useHttps =
     String(process.env.VALHALLA_USE_HTTPS || "false").toLowerCase() === "true";
   const port = process.env.VALHALLA_PORT || (useHttps ? "443" : "8080");
   const config = `# Vroom configuration
 vroom:
-  router: ${process.env.VROOM_ROUTER || "valhalla"}
+  router: ${process.env.VROOM_ROUTER || "osrm"}
   geometry: true
   
 routing:
-  valhalla:
+  osrm:
     servers:
-      - host: ${sanitizedHost}
-        port: ${port}
-        use_https: ${useHttps}
+      - host: localhost
+        port: 5000
 `;
 
   writeFileSync("/tmp/vroom-config.yml", config);
@@ -65,17 +63,17 @@ app.get("/health", (req, res) => {
   res.json({
     ok: true,
     port,
-    vroom_router: process.env.VROOM_ROUTER || "valhalla",
-    valhalla_host: (
-      process.env.VALHALLA_HOST || "valhalla"
-    )
+    vroom_router: process.env.VROOM_ROUTER || "osrm",
+    valhalla_host: (process.env.VALHALLA_HOST || "valhalla")
       .replace(/^https?:\/\//i, "")
       .replace(/\/$/, ""),
     valhalla_use_https:
-      String(process.env.VALHALLA_USE_HTTPS || "false").toLowerCase() === "true",
+      String(process.env.VALHALLA_USE_HTTPS || "false").toLowerCase() ===
+      "true",
     valhalla_port:
       process.env.VALHALLA_PORT ||
-      (String(process.env.VALHALLA_USE_HTTPS || "false").toLowerCase() === "true"
+      (String(process.env.VALHALLA_USE_HTTPS || "false").toLowerCase() ===
+      "true"
         ? "443"
         : "8080"),
   });
