@@ -49,7 +49,7 @@ cliArgs:
   path: ''
   host: '0.0.0.0'
   port: ${PORT}
-  router: '${VROOM_ROUTER}'
+  router: 'valhalla'
   timeout: 300000
   baseurl: '/'
 routingServers:
