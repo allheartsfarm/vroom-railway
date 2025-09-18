@@ -6,9 +6,9 @@ RUN chmod +x /railway-entrypoint.sh
 
 ENV VROOM_ROUTER=valhalla \
     VROOM_LOG=/conf \
-    VALHALLA_HOST=allheartsfarm-valhalla.up.railway.app \
-    VALHALLA_PORT=443 \
-    VALHALLA_USE_HTTPS=true
+    VALHALLA_HOST=valhalla \
+    VALHALLA_PORT=8080 \
+    VALHALLA_USE_HTTPS=false
 
 EXPOSE 8080
 CMD ["/railway-entrypoint.sh"]
