@@ -7,7 +7,8 @@ echo "Starting VROOM with Valhalla routing on port ${PORT:-8080}..."
 export VROOM_ROUTER=valhalla
 export VROOM_VALHALLA_HOST=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
 export VROOM_VALHALLA_PORT=443
-export PORT=${PORT:-8080}
+# Prefer platform-provided dynamic port if present
+export PORT=${PORT:-${RAILWAY_TCP_PORT:-8080}}
 
 echo "=== ENVIRONMENT VARIABLES ==="
 echo "VROOM_ROUTER: $VROOM_ROUTER"
@@ -27,15 +28,22 @@ node /proxy.js &
 # Write vroom-express configuration to /conf/config.yml pointing to local proxy
 cat > /conf/config.yml << EOF
 cliArgs:
+  geometry: true
+  planmode: false
+  threads: 4
+  explore: 5
+  limit: '1mb'
+  logdir: '/conf'
+  logsize: '100M'
+  maxlocations: 1000
+  maxvehicles: 200
+  override: true
+  path: ''
   host: '0.0.0.0'
   port: $PORT
   router: 'valhalla'
-  geometry: true
+  timeout: 30000
   baseurl: '/'
-  logdir: '/conf'
-  logsize: '100M'
-  limit: '1mb'
-  path: ''
 
 routingServers:
   valhalla:
@@ -60,5 +68,6 @@ EOF
 echo "=== Generated /conf/config.yml ==="
 cat /conf/config.yml
 
-# Start vroom-express with explicit config
-exec vroom-express --config /conf/config.yml --port $PORT
+# Make config available where vroom-express expects it and start
+ln -sf /conf/config.yml /vroom-express/config.yml
+exec node /vroom-express/src/index.js

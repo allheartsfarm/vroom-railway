@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  vroom:
+    build:
+      context: .
+      dockerfile: services/vroom/Dockerfile
+    environment:
+      VALHALLA_HOST: allheartsfarm-valhalla.up.railway.app
+      VALHALLA_PORT: "443"
+      VROOM_ROUTER: valhalla
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
