@@ -13,9 +13,9 @@ RUN npm install
 
 # Set environment variables
 ENV VROOM_ROUTER=valhalla \
-    VALHALLA_HOST=allheartsfarm-valhalla.up.railway.app \
-    VALHALLA_PORT=443 \
-    VALHALLA_USE_HTTPS=true
+    VALHALLA_HOST=valhalla \
+    VALHALLA_PORT=8080 \
+    VALHALLA_USE_HTTPS=false
 
 EXPOSE 8080
 CMD ["node", "server.js"]

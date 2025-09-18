@@ -13,11 +13,11 @@ const port = process.env.PORT || 3000;
 // Generate vroom config.yml
 const generateVroomConfig = () => {
   const rawHost =
-    process.env.VALHALLA_HOST || "allheartsfarm-valhalla.up.railway.app";
+    process.env.VALHALLA_HOST || "valhalla";
   const sanitizedHost = rawHost.replace(/^https?:\/\//i, "").replace(/\/$/, "");
   const useHttps =
-    String(process.env.VALHALLA_USE_HTTPS || "true").toLowerCase() === "true";
-  const port = process.env.VALHALLA_PORT || (useHttps ? "443" : "80");
+    String(process.env.VALHALLA_USE_HTTPS || "false").toLowerCase() === "true";
+  const port = process.env.VALHALLA_PORT || (useHttps ? "443" : "8080");
   const config = `# Vroom configuration
 vroom:
   router: ${process.env.VROOM_ROUTER || "valhalla"}
@@ -67,17 +67,17 @@ app.get("/health", (req, res) => {
     port,
     vroom_router: process.env.VROOM_ROUTER || "valhalla",
     valhalla_host: (
-      process.env.VALHALLA_HOST || "allheartsfarm-valhalla.up.railway.app"
+      process.env.VALHALLA_HOST || "valhalla"
     )
       .replace(/^https?:\/\//i, "")
       .replace(/\/$/, ""),
     valhalla_use_https:
-      String(process.env.VALHALLA_USE_HTTPS || "true").toLowerCase() === "true",
+      String(process.env.VALHALLA_USE_HTTPS || "false").toLowerCase() === "true",
     valhalla_port:
       process.env.VALHALLA_PORT ||
-      (String(process.env.VALHALLA_USE_HTTPS || "true").toLowerCase() === "true"
+      (String(process.env.VALHALLA_USE_HTTPS || "false").toLowerCase() === "true"
         ? "443"
-        : "80"),
+        : "8080"),
   });
 });
 
