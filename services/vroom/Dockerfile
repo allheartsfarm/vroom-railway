@@ -19,9 +19,9 @@ RUN set -eux; \
 
 ENV VROOM_ROUTER=valhalla \
     VROOM_LOG=/conf \
-    VALHALLA_HOST=allheartsfarm-valhalla.up.railway.app \
-    VALHALLA_PORT=443 \
-    VALHALLA_USE_HTTPS=true
+    VALHALLA_HOST=valhalla \
+    VALHALLA_PORT=8080 \
+    VALHALLA_USE_HTTPS=false
 
 # Prefer IPv4 when both A/AAAA exist (avoids IPv6-only egress issues)
 ENV NODE_OPTIONS="--dns-result-order=ipv4first"
