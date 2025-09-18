@@ -13,8 +13,8 @@ RAW_VALHALLA_HOST=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
 VALHALLA_HOST_CLEAN=${RAW_VALHALLA_HOST#http://}
 VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN#https://}
 VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN%/}
-# Use IP address to avoid DNS issues
-VALHALLA_HOST_CLEAN=66.33.22.61
+  # Use hostname for SSL certificate validation
+VALHALLA_HOST_CLEAN=allheartsfarm-valhalla.up.railway.app
 # Use HTTPS on port 443
 VALHALLA_USE_HTTPS_NORM=true
 VALHALLA_PORT_EFF=443
