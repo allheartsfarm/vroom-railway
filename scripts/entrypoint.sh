@@ -57,20 +57,21 @@ cliArgs:
   timeout: 300000
   baseurl: '/'
 routingServers:
-  car:
-    - host: '${VALHALLA_HOST_CLEAN}'
+  valhalla:
+    car:
+      host: '${VALHALLA_HOST_CLEAN}'
       port: ${VALHALLA_PORT_EFF}
       use_https: ${VALHALLA_USE_HTTPS_NORM}
-  bike:
-    - host: '${VALHALLA_HOST_CLEAN}'
+    bike:
+      host: '${VALHALLA_HOST_CLEAN}'
       port: ${VALHALLA_PORT_EFF}
       use_https: ${VALHALLA_USE_HTTPS_NORM}
-  foot:
-    - host: '${VALHALLA_HOST_CLEAN}'
+    foot:
+      host: '${VALHALLA_HOST_CLEAN}'
       port: ${VALHALLA_PORT_EFF}
       use_https: ${VALHALLA_USE_HTTPS_NORM}
-  auto:
-    - host: '${VALHALLA_HOST_CLEAN}'
+    auto:
+      host: '${VALHALLA_HOST_CLEAN}'
       port: ${VALHALLA_PORT_EFF}
       use_https: ${VALHALLA_USE_HTTPS_NORM}
 YAML
