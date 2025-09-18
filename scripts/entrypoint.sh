@@ -9,10 +9,12 @@ export VROOM_ROUTER=valhalla
 VROOM_LOG=${VROOM_LOG:-/conf}
 
 # Sanitize Valhalla host and normalize HTTPS/port
-RAW_VALHALLA_HOST=${VALHALLA_HOST:-valhalla}
+RAW_VALHALLA_HOST=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
 VALHALLA_HOST_CLEAN=${RAW_VALHALLA_HOST#http://}
 VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN#https://}
 VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN%/}
+# Use IP address to avoid DNS issues
+VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN:-66.33.22.61}
 VALHALLA_USE_HTTPS_NORM=$(echo "${VALHALLA_USE_HTTPS:-true}" | tr '[:upper:]' '[:lower:]')
 if [ -n "${VALHALLA_PORT:-}" ]; then
   VALHALLA_PORT_EFF=${VALHALLA_PORT}
