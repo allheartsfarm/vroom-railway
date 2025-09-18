@@ -15,16 +15,10 @@ VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN#https://}
 VALHALLA_HOST_CLEAN=${VALHALLA_HOST_CLEAN%/}
 # Use the environment variables directly
 VALHALLA_HOST_CLEAN=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
-VALHALLA_USE_HTTPS_NORM=$(echo "${VALHALLA_USE_HTTPS:-true}" | tr '[:upper:]' '[:lower:]')
-if [ -n "${VALHALLA_PORT:-}" ]; then
-  VALHALLA_PORT_EFF=${VALHALLA_PORT}
-else
-  if [ "${VALHALLA_USE_HTTPS_NORM}" = "true" ]; then
-    VALHALLA_PORT_EFF=443
-  else
-    VALHALLA_PORT_EFF=8080
-  fi
-fi
+# Force HTTP to avoid SSL issues
+VALHALLA_USE_HTTPS_NORM=false
+# Force port 8080 for HTTP
+VALHALLA_PORT_EFF=8080
 
 # Remove OSRM/ORS defaults to force Valhalla usage
 
@@ -53,7 +47,7 @@ cliArgs:
   host: '0.0.0.0'
   port: ${PORT}
   router: 'valhalla'
-  timeout: 300000
+  timeout: 10000
   baseurl: '/'
 routingServers:
   valhalla:
