@@ -72,21 +72,18 @@ const startVroom = () => {
   generateVroomConfig();
 
   // Start vroom on port 8080
-  vroomProcess = spawn(
-    "vroom",
-    ["--router", "valhalla", "--port", "8080"],
-    {
-      stdio: "inherit",
-      env: { 
-        ...process.env, 
-        PORT: "8080",
-        VROOM_ROUTER: "valhalla",
-        VROOM_VALHALLA_HOST: process.env.VALHALLA_HOST || "allheartsfarm-valhalla.up.railway.app",
-        VROOM_VALHALLA_PORT: process.env.VALHALLA_PORT || "443",
-        VROOM_VALHALLA_USE_HTTPS: process.env.VALHALLA_USE_HTTPS || "true"
-      },
-    }
-  );
+  vroomProcess = spawn("vroom", ["--router", "valhalla", "--port", "8080"], {
+    stdio: "inherit",
+    env: {
+      ...process.env,
+      PORT: "8080",
+      VROOM_ROUTER: "valhalla",
+      VROOM_VALHALLA_HOST:
+        process.env.VALHALLA_HOST || "allheartsfarm-valhalla.up.railway.app",
+      VROOM_VALHALLA_PORT: process.env.VALHALLA_PORT || "443",
+      VROOM_VALHALLA_USE_HTTPS: process.env.VALHALLA_USE_HTTPS || "true",
+    },
+  });
 
   vroomProcess.on("error", (err) => {
     console.error("Failed to start vroom:", err);
