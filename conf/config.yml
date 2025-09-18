@@ -1,0 +1,24 @@
+cliArgs:
+  host: '0.0.0.0'
+  port: 8080
+  router: 'valhalla'
+  geometry: true
+
+routingServers:
+  valhalla:
+    car:
+      host: 'allheartsfarm-valhalla.up.railway.app'
+      port: 443
+      use_https: true
+    bike:
+      host: 'allheartsfarm-valhalla.up.railway.app'
+      port: 443
+      use_https: true
+    foot:
+      host: 'allheartsfarm-valhalla.up.railway.app'
+      port: 443
+      use_https: true
+    auto:
+      host: 'allheartsfarm-valhalla.up.railway.app'
+      port: 443
+      use_https: true

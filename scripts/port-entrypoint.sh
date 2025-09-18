@@ -16,5 +16,49 @@ echo "VROOM_VALHALLA_PORT: $VROOM_VALHALLA_PORT"
 echo "PORT: $PORT"
 echo "============================="
 
-# Start vroom with Valhalla routing using environment variables
-exec vroom --router valhalla --port $PORT
+# Ensure config dir exists
+mkdir -p /conf
+
+# Start lightweight HTTPS→HTTP proxy to Valhalla (listens on 9002)
+export TARGET_HOST=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
+export TARGET_PORT=${VALHALLA_PORT:-443}
+node /proxy.js &
+
+# Write vroom-express configuration to /conf/config.yml pointing to local proxy
+cat > /conf/config.yml << EOF
+cliArgs:
+  host: '0.0.0.0'
+  port: $PORT
+  router: 'valhalla'
+  geometry: true
+  baseurl: '/'
+  logdir: '/conf'
+  logsize: '100M'
+  limit: '1mb'
+  path: ''
+
+routingServers:
+  valhalla:
+    car:
+      host: '127.0.0.1'
+      port: 9002
+      use_https: false
+    bike:
+      host: '127.0.0.1'
+      port: 9002
+      use_https: false
+    foot:
+      host: '127.0.0.1'
+      port: 9002
+      use_https: false
+    auto:
+      host: '127.0.0.1'
+      port: 9002
+      use_https: false
+EOF
+
+echo "=== Generated /conf/config.yml ==="
+cat /conf/config.yml
+
+# Start vroom-express with explicit config
+exec vroom-express --config /conf/config.yml --port $PORT
