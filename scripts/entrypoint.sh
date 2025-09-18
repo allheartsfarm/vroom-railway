@@ -79,5 +79,6 @@ echo "=========================="
 # Railway's edge proxy can reach it. Since we set PORT=8080 in Railway env vars,
 # this should work.
 
-# Start vroom-express directly with our rendered config
-exec vroom-express --config /conf/config.yml --port ${PORT}
+# Hand off to upstream entrypoint which starts vroom-express; it will
+# pick up /conf/config.yml if present.
+exec /bin/bash /docker-entrypoint.sh
