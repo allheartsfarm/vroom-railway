@@ -19,7 +19,11 @@ const server = http.createServer((clientReq, clientRes) => {
       try {
         const json = JSON.parse(body.toString("utf8"));
         if (typeof json === "object" && json) {
-          const map = { car: "auto", bike: "bicycle", foot: "pedestrian" };
+          const map = {
+            car: process.env.CAR_COSTING || "auto",
+            bike: process.env.BIKE_COSTING || "bicycle",
+            foot: process.env.FOOT_COSTING || "pedestrian",
+          };
           if (
             json.costing &&
             typeof json.costing === "string" &&
@@ -43,7 +47,11 @@ const server = http.createServer((clientReq, clientRes) => {
       const jsonParam = u.searchParams.get("json");
       if (jsonParam) {
         const parsed = JSON.parse(jsonParam);
-        const map = { car: "auto", bike: "bicycle", foot: "pedestrian" };
+        const map = {
+          car: process.env.CAR_COSTING || "auto",
+          bike: process.env.BIKE_COSTING || "bicycle",
+          foot: process.env.FOOT_COSTING || "pedestrian",
+        };
         if (
           parsed &&
           typeof parsed === "object" &&
@@ -60,6 +68,7 @@ const server = http.createServer((clientReq, clientRes) => {
     const headers = { ...clientReq.headers, host: TARGET_HOST };
     if (body.length) headers["content-length"] = Buffer.byteLength(body);
 
+    const reqStart = Date.now();
     const options = {
       hostname: TARGET_HOST,
       port: TARGET_PORT,
@@ -69,8 +78,25 @@ const server = http.createServer((clientReq, clientRes) => {
     };
 
     const proxyReq = https.request(options, (proxyRes) => {
-      clientRes.writeHead(proxyRes.statusCode || 502, proxyRes.headers);
-      proxyRes.pipe(clientRes);
+      const status = proxyRes.statusCode || 0;
+      const chunksOut = [];
+      proxyRes.on("data", (c) => chunksOut.push(c));
+      clientRes.writeHead(status, proxyRes.headers);
+      proxyRes.on("end", () => {
+        const buf = Buffer.concat(chunksOut);
+        console.log(
+          JSON.stringify({
+            event: "proxy_response",
+            method: clientReq.method,
+            path,
+            to: `${TARGET_HOST}:${TARGET_PORT}`,
+            status,
+            ms: Date.now() - reqStart,
+            preview: buf.toString("utf8").slice(0, 200),
+          })
+        );
+        clientRes.end(buf);
+      });
     });
 
     proxyReq.on("error", (err) => {
@@ -78,6 +104,15 @@ const server = http.createServer((clientReq, clientRes) => {
       clientRes.setHeader("content-type", "application/json");
       clientRes.end(
         JSON.stringify({ error: "proxy_error", message: err.message })
+      );
+      console.log(
+        JSON.stringify({
+          event: "proxy_error",
+          method: clientReq.method,
+          path,
+          to: `${TARGET_HOST}:${TARGET_PORT}`,
+          message: err.message,
+        })
       );
     });
 
