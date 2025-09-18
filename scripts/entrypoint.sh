@@ -54,21 +54,21 @@ cliArgs:
 routingServers:
   valhalla:
     car:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: ${VALHALLA_PORT_EFF}
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
+      host: '66.33.22.61'
+      port: 8080
+      use_https: false
     bike:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: ${VALHALLA_PORT_EFF}
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
+      host: '66.33.22.61'
+      port: 8080
+      use_https: false
     foot:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: ${VALHALLA_PORT_EFF}
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
+      host: '66.33.22.61'
+      port: 8080
+      use_https: false
     auto:
-      host: '${VALHALLA_HOST_CLEAN}'
-      port: ${VALHALLA_PORT_EFF}
-      use_https: ${VALHALLA_USE_HTTPS_NORM}
+      host: '66.33.22.61'
+      port: 8080
+      use_https: false
 YAML
 
 # Log the effective config for troubleshooting
