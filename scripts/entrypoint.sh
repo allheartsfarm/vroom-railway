@@ -6,9 +6,9 @@ echo "Starting VROOM with Valhalla configuration..."
 # Defaults
 PORT=${PORT:-8080}
 VROOM_ROUTER=${VROOM_ROUTER:-valhalla}
-VALHALLA_HOST=${VALHALLA_HOST:-valhalla}
-VALHALLA_PORT=${VALHALLA_PORT:-8080}
-VALHALLA_USE_HTTPS=${VALHALLA_USE_HTTPS:-false}
+VALHALLA_HOST=${VALHALLA_HOST:-allheartsfarm-valhalla.up.railway.app}
+VALHALLA_PORT=${VALHALLA_PORT:-443}
+VALHALLA_USE_HTTPS=${VALHALLA_USE_HTTPS:-true}
 
 mkdir -p /conf
 
