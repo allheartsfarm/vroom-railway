@@ -26,9 +26,9 @@ cat > /conf/config.yml <<EOF
 cliArgs:
   geometry: true
   planmode: false
-  threads: 4
+  threads: 8
   explore: 5
-  limit: '1mb'
+  limit: '20mb'
   logdir: '/conf'
   logsize: '100M'
   maxlocations: 1000
@@ -38,7 +38,7 @@ cliArgs:
   host: '0.0.0.0'
   port: ${PORT}
   router: 'valhalla'
-  timeout: 30000
+  timeout: 300000
   baseurl: '/'
 routingServers:
   valhalla:
@@ -55,6 +55,10 @@ routingServers:
       port: ${VALHALLA_PORT}
       use_https: ${VALHALLA_USE_HTTPS}
     auto:
+      host: '${VALHALLA_HOST}'
+      port: ${VALHALLA_PORT}
+      use_https: ${VALHALLA_USE_HTTPS}
+    truck:
       host: '${VALHALLA_HOST}'
       port: ${VALHALLA_PORT}
       use_https: ${VALHALLA_USE_HTTPS}

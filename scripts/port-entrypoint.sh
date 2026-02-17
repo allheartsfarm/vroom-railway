@@ -35,9 +35,9 @@ cat > /conf/config.yml << EOF
 cliArgs:
   geometry: true
   planmode: false
-  threads: 4
+  threads: 8
   explore: 5
-  limit: '1mb'
+  limit: '20mb'
   logdir: '/conf'
   logsize: '100M'
   maxlocations: 1000
@@ -47,7 +47,7 @@ cliArgs:
   host: '0.0.0.0'
   port: $PORT
   router: 'valhalla'
-  timeout: 30000
+  timeout: 300000
   baseurl: '/'
 
 routingServers:
@@ -68,11 +68,21 @@ routingServers:
       host: '127.0.0.1'
       port: 9002
       use_https: false
+    truck:
+      host: '127.0.0.1'
+      port: 9002
+      use_https: false
 EOF
 
 echo "=== Generated /conf/config.yml ==="
 cat /conf/config.yml
 
-# Make config available where vroom-express expects it and start
+# Make config available where vroom-express expects it and start vroom-express on 8081
 ln -sf /conf/config.yml /vroom-express/config.yml
-exec node /vroom-express/src/index.js
+VROOM_UPSTREAM_PORT=8081
+node /vroom-express/src/index.js --port $VROOM_UPSTREAM_PORT &
+
+# Start a tiny front proxy on PORT that logs every request and proxies to vroom-express on 8081
+export UPSTREAM_HOST=127.0.0.1
+export UPSTREAM_PORT=$VROOM_UPSTREAM_PORT
+node /front-proxy.js

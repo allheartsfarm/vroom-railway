@@ -83,7 +83,9 @@ const server = http.createServer((clientReq, clientRes) => {
       const status = proxyRes.statusCode || 0;
       const chunksOut = [];
       proxyRes.on("data", (c) => chunksOut.push(c));
-      clientRes.writeHead(status, proxyRes.headers);
+      if (!clientRes.headersSent) {
+        clientRes.writeHead(status, proxyRes.headers);
+      }
       proxyRes.on("end", () => {
         const buf = Buffer.concat(chunksOut);
         console.log(
@@ -97,16 +99,23 @@ const server = http.createServer((clientReq, clientRes) => {
             preview: buf.toString("utf8").slice(0, 200),
           })
         );
-        clientRes.end(buf);
+        if (!clientRes.writableEnded) clientRes.end(buf);
       });
     });
 
+    // Guard against upstream errors after response started
     proxyReq.on("error", (err) => {
-      clientRes.statusCode = 502;
-      clientRes.setHeader("content-type", "application/json");
-      clientRes.end(
-        JSON.stringify({ error: "proxy_error", message: err.message })
-      );
+      try {
+        if (!clientRes.headersSent && !clientRes.writableEnded) {
+          clientRes.statusCode = 502;
+          clientRes.setHeader("content-type", "application/json");
+          clientRes.end(
+            JSON.stringify({ error: "proxy_error", message: err.message })
+          );
+        } else if (!clientRes.writableEnded) {
+          clientRes.end();
+        }
+      } catch (_) {}
       console.log(
         JSON.stringify({
           event: "proxy_error",
@@ -116,6 +125,16 @@ const server = http.createServer((clientReq, clientRes) => {
           message: err.message,
         })
       );
+    });
+
+    // Timeout and client abort handling
+    proxyReq.setTimeout(15000, () => {
+      proxyReq.destroy(new Error("upstream_timeout"));
+    });
+    clientReq.on("aborted", () => {
+      try {
+        proxyReq.destroy(new Error("client_aborted"));
+      } catch (_) {}
     });
 
     if (body.length > 0) proxyReq.write(body);
